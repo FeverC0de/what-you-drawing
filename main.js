@@ -105,7 +105,7 @@ async function predict(changeText) {
     
     let input = getImgData()
 
-    const feeds = { "input": input };  // replace "input" with actual input name if needed
+    const feeds = { "input.1": input };  // replace "input" with actual input name if needed
     const outputMap = await sess.run(feeds);
     const outputTensor = outputMap[Object.keys(outputMap)[0]];
     const predictions =  outputTensor.data; 
