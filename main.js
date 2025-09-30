@@ -1,4 +1,6 @@
 
+import * as ort from 'onnxruntime-web';
+
 const bigCanvas = document.getElementById('drawing-board');
 const smallCanvas = document.getElementById("small-canvas")
 const overlay = document.getElementById('overlay');
@@ -106,7 +108,7 @@ async function predict(changeText) {
     
     let input = getImgData()
 
-    await loadModel;
+    await initModel;
     const feeds = { "input": input };  // replace "input" with actual input name if needed
     const outputMap = await sess.run(feeds);
     const outputTensor = outputMap[Object.keys(outputMap)[0]];
