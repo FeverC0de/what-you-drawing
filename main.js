@@ -45,9 +45,16 @@ bigCanvas.addEventListener('mousemove', (e) => draw(e))
 
 
 //loading Model
-const sess = new onnx.InferenceSession();
-const loadModel = sess.loadModel("./ResNet50-Final-Boss.onnx");
+let sess;
+let modelLoaded = false;
 
+async function initModel() {
+    sess = await ort.InferenceSession.create("./resnet50_final_boss.onnx"); // lowercase file name for GitHub Pages
+    modelLoaded = true;
+    overlayCanvas.clearRect(0, 0, overlay.width, overlay.height);
+    overlay.style.display = "none";
+}
+initModel();
 
 
 predict(false)
@@ -90,8 +97,7 @@ function getImgData() {
     for(let i = 3; i <= imgData.data.length; i += 4){
         imgArray.push(imgData.data[i] / 255);
     }
-    const imgTensor = new onnx.Tensor(imgArray, 'float32', [1, 1, 28, 28])
-
+    const imgTensor = new ort.Tensor('float32', Float32Array.from(imgArray), [1, 1, 28, 28]);
     return imgTensor
 
 }
@@ -101,8 +107,9 @@ async function predict(changeText) {
     let input = getImgData()
 
     await loadModel;
-    const outputMap = await sess.run([input]);
-    const outputTensor = outputMap.values().next().value;
+    const feeds = { "input": input };  // replace "input" with actual input name if needed
+    const outputMap = await sess.run(feeds);
+    const outputTensor = outputMap[Object.keys(outputMap)[0]];
     const predictions =  outputTensor.data; 
 
     const maxPredictionIndex = predictions.indexOf(Math.max(...predictions));
