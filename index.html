@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=<c>, initial-scale=1.0">
+    <title>Recognize Object</title>
+    <link rel = "stylesheet" href = "style.css" />
+</head>
+
+<body class = "body">
+<div class = "header">
+    <p>RESNET DRAWING GUESSER</p>
+    <p class = "info-text">Made using Google's quickdraw dataset</p>
+</div>
+
+<canvas id = small-canvas width = "28" height = "28"> </canvas>
+
+
+
+<div class = "page"> 
+    <div class = "drawing-board">
+        <div id = "parent-board" width = "280" height = "280">
+            <canvas id = "overlay" width = "280" height = "280">
+            </canvas>
+            <canvas id = "drawing-board" width = "280" height = "280"></canvas>
+        </div>
+        </canvas>
+        <div id = "guess-bar">
+            <p id = "guess-text"></p>
+        </div>
+        <button id = "erase_button">CLEAR</button>
+    </div>        
+    <div class = "probability-chart"></div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/@tensorflow/tfjs"></script>
+<script src = "https://cdn.jsdelivr.net/npm/onnxjs/dist/onnx.min.js"></script>
+<script src="index.js"></script>
+</body>
+</html>
